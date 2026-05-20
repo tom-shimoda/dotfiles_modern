@@ -23,7 +23,7 @@ $SUDO apt install -y --no-install-recommends \
 
 echo "### Locale (UTF-8)"
 $SUDO locale-gen en_US.UTF-8
-$SUDO update-locale LANG=en_US.UTF-8
+$SUDO update-locale LANG=en_US.UTF-8 || true
 export LANG=en_US.UTF-8
 
 # bat (Debian 12: bat / Debian 11: batcat)
