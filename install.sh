@@ -37,6 +37,7 @@ NERD_FONT_VER="3.2.1"
 NERD_FONT_DIR="$HOME/.local/share/fonts/NerdFonts"
 mkdir -p "$NERD_FONT_DIR"
 if [ ! "$(ls -A "$NERD_FONT_DIR")" ]; then
+    mkdir -p ~/Downloads
     cd ~/Downloads
     wget --no-check-certificate \
         "https://github.com/ryanoasis/nerd-fonts/releases/download/v${NERD_FONT_VER}/NerdFontsSymbolsOnly.tar.xz" \
@@ -103,6 +104,8 @@ bash deploy-dotfiles
 echo "### Change shell to zsh"
 command -v zsh | $SUDO tee -a /etc/shells > /dev/null
 chsh -s "$(command -v zsh)" 2>/dev/null || true
+
+rm -rf ~/Downloads
 
 echo ""
 echo "### Done."
