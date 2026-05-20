@@ -4,6 +4,8 @@
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+ZSH_DISABLE_COMPFIX=true
+
 ########################
 # zsh起動時にtmuxも自動起動
 ########################
