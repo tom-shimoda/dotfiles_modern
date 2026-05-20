@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Vim/Neovim swap・バックアップ
+*.swp
+*.swo
+*~
+
+# Neovim runtime（キャッシュ・プラグインデータ）
+.config/nvim/plugin/
+.config/nvim/undo/
+.config/nvim/backupdir/

@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+copy_to() {
+    if [ -e "$SCRIPT_DIR/$1" ]; then
+        echo "copy $1"
+        cp $3 "$SCRIPT_DIR/$1" $2
+    else
+        echo "skip: $1 (not found)"
+    fi
+}
+
+mkdir -p ~/.config
+
+# nvim設定はシンボリックリンクで直接参照
+# → ホスト側のdotfiles_modern/.config/nvim/変更が即時反映される
+echo "link .config/nvim -> $SCRIPT_DIR/.config/nvim"
+ln -sfn "$SCRIPT_DIR/.config/nvim" ~/.config/nvim
+
+copy_to .gitconfig ~
+copy_to .zshrc ~
+copy_to .tmux.conf ~
+copy_to .tmux_toggle.conf ~
+copy_to .tmux-pane-border ~
+copy_to .p10k.zsh ~
+
+mkdir -p ~/.tmux/scripts
+copy_to .tmux/scripts/lan-ip.sh ~/.tmux/scripts/
+copy_to .tmux/scripts/wan-ip.sh ~/.tmux/scripts/
+chmod +x ~/.tmux/scripts/lan-ip.sh ~/.tmux/scripts/wan-ip.sh
