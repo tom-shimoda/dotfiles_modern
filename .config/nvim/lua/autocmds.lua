@@ -9,6 +9,15 @@ autocmd("BufEnter", {
     end,
 })
 
+-- tmuxのpaneフォーカスハイライトを反映させるため背景を透過
+autocmd("ColorScheme", {
+    group = augroup("transparent_bg", { clear = true }),
+    callback = function()
+        vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+        vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
+    end,
+})
+
 -- TODO/NOTE等のキーワードをハイライト
 -- Syntaxイベントはtreesitter環境で頻発するため除外
 -- matchaddの重複追加を防ぐためgetmatchesで確認してから追加

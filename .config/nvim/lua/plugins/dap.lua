@@ -1,11 +1,22 @@
 return {
     {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+        config = function()
+            require("mason-nvim-dap").setup({
+                ensure_installed = {},
+                automatic_installation = true,
+                handlers = {},
+            })
+        end,
+    },
+
+    {
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
             "theHamsta/nvim-dap-virtual-text",
-            "leoluz/nvim-dap-go",
         },
         keys = {
             { "<F4>",       "<cmd>lua require'dapui'.toggle()<CR>",                                                desc = "DAP UI toggle" },
@@ -19,7 +30,6 @@ return {
             { "<leader>l",  "<cmd>lua require'dap'.set_breakpoint(nil,nil,vim.fn.input('Log message: '))<CR>",   desc = "DAP log point" },
             { "<leader>d",  "<cmd>lua require'dapui'.toggle()<CR>",                                              desc = "DAP UI toggle" },
             { "<leader>e",  "<cmd>lua require'dapui'.eval()<CR>",                                                desc = "DAP eval" },
-            { "<leader>td", "<cmd>lua require'dap-go'.debug_test()<CR>",                                         desc = "DAP Go debug test" },
         },
         config = function()
             local dap    = require("dap")
@@ -95,59 +105,6 @@ return {
                 end,
             })
 
-            -- dap-go
-            require("dap-go").setup()
-
-            -- Go adapter (dlv)
-            dap.adapters.go = function(callback, _)
-                local port   = 38697
-                local stdout = vim.loop.new_pipe(false)
-                local handle, pid_or_err = vim.loop.spawn("dlv", {
-                    stdio    = { nil, stdout },
-                    args     = { "dap", "-l", "127.0.0.1:" .. port },
-                    detached = true,
-                }, function(code)
-                    stdout:close()
-                    if code ~= 0 then
-                        print("dlv exited with code", code)
-                    end
-                end)
-                assert(handle, "Error running dlv: " .. tostring(pid_or_err))
-                stdout:read_start(function(err, chunk)
-                    assert(not err, err)
-                    if chunk then
-                        vim.schedule(function()
-                            require("dap.repl").append(chunk)
-                        end)
-                    end
-                end)
-                vim.defer_fn(function()
-                    callback({ type = "server", host = "127.0.0.1", port = port })
-                end, 100)
-            end
-
-            dap.configurations.go = {
-                {
-                    type    = "go",
-                    name    = "Debug (main.go)",
-                    request = "launch",
-                    program = "main.go",
-                },
-                {
-                    type    = "go",
-                    name    = "Debug test (current file)",
-                    request = "launch",
-                    mode    = "test",
-                    program = "${file}",
-                },
-                {
-                    type    = "go",
-                    name    = "Debug test (go.mod)",
-                    request = "launch",
-                    mode    = "test",
-                    program = "./${relativeFileDirname}",
-                },
-            }
         end,
     },
 }

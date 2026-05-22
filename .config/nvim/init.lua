@@ -19,6 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
     ui = { border = "rounded" },
+    git = { timeout = 600 },
     performance = {
         rtp = {
             disabled_plugins = {

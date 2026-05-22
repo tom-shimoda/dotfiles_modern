@@ -9,7 +9,7 @@ ZSH_DISABLE_COMPFIX=true
 ########################
 # zsh起動時にtmuxも自動起動
 ########################
-[[ -z "$TMUX" && ! -z "$PS1" ]] && (tmux a || tmux new-session)
+[[ -z "$TMUX" && ! -z "$PS1" && -t 0 ]] && { tmux a || tmux new-session; exit }
 
 ########################
 # Powerlevel10kにより自動生成
@@ -57,6 +57,10 @@ function sz(){
     fi
 }
 
+# mkdir -p && touch (途中のフォルダがなければ生成)
+tp() {
+  mkdir -p "$(dirname "$1")" && touch "$1"
+}
 
 ########################
 # PATH
@@ -118,6 +122,7 @@ fi
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+ZINIT[COMPINIT_OPTS]=-u
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)

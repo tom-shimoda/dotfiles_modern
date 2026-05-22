@@ -73,6 +73,7 @@ return {
         "saghen/blink.cmp",
         version = "*",
         dependencies = {
+            "saghen/blink.lib",
             "L3MON4D3/LuaSnip",
             "rafamadriz/friendly-snippets",
         },
