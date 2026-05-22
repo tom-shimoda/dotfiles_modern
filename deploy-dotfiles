@@ -14,10 +14,9 @@ copy_to() {
 
 mkdir -p ~/.config
 
-# nvim設定はシンボリックリンクで直接参照
-# → ホスト側のdotfiles_modern/.config/nvim/変更が即時反映される
-echo "link .config/nvim -> $SCRIPT_DIR/.config/nvim"
-ln -sfn "$SCRIPT_DIR/.config/nvim" ~/.config/nvim
+echo "copy .config/nvim"
+rm -rf ~/.config/nvim
+cp -r "$SCRIPT_DIR/.config/nvim" ~/.config/nvim
 
 copy_to .gitconfig ~
 copy_to .zshrc ~
