@@ -22,31 +22,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 ########################
-# .zshrcの分割 (分割ファイルは~/.zsh/*.zsh)
-# 参考元: https://original-game.com/how-to-manage-zshrc-separately/
-########################
-ZSH_DIR="${HOME}/.zsh"
-# .zshがディレクトリで、読み取り、実行、が可能なとき
-if [ -d $ZSH_DIR ] && [ -r $ZSH_DIR ] && [ -x $ZSH_DIR ]; then
-    # zshディレクトリより下にある、.zshファイルの分、繰り返す
-    for file in ${ZSH_DIR}/**/*.zsh; do
-        # 読み取り可能ならば実行する
-        [ -r $file ] && source $file
-    done
-fi
-
-########################
 # alias
 ########################
 alias ll='ls -alF --time-style="+%Y/%m/%d %H:%M:%S"'
 alias gitg='git log --graph --oneline --decorate=full --date=short --format="%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)" $args'
 alias sail='[ -f sail  ] && sh sail || sh vendor/bin/sail'
 alias pbcopy='xsel --clipboard --input'
-alias here='cmd.exe /C "start `wslpath -w .`"'
-alias home='cd /mnt/c/Users/shimoda'
+alias here='open .'
 alias py='python3'
 alias python='python3'
-alias speedtest='speedtest -s 48463'
 
 # フォルダサイズを取得
 function sz(){
@@ -70,7 +54,6 @@ export PATH=$HOME/Downloads/nvim-linux64/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:/usr/bin/python3
-# export DOCKER_CONTENT_TRUST=1 # Docker Content Trust(DCT)を有効にする (Dockerイメージのなりすまし等を防ぐ)
 
 ########################
 # cd移動時に自動でllする
