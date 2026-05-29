@@ -94,6 +94,10 @@ export NVM_DIR="$HOME/.nvm"
 \. "$NVM_DIR/nvm.sh"
 nvm install --lts --latest-npm
 
+echo "### speedtest CLI (Ookla)"
+curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | $SUDO bash
+$SUDO apt install -y --no-install-recommends speedtest
+
 echo "### Claude Code"
 npm install -g @anthropic-ai/claude-code
 
@@ -102,8 +106,9 @@ cd "$SCRIPT_DIR"
 bash deploy-dotfiles
 
 echo "### Change shell to zsh"
-command -v zsh | $SUDO tee -a /etc/shells > /dev/null
-chsh -s "$(command -v zsh)" 2>/dev/null || true
+ZSH_PATH="$(command -v zsh)"
+grep -qxF "$ZSH_PATH" /etc/shells || echo "$ZSH_PATH" | $SUDO tee -a /etc/shells > /dev/null
+$SUDO usermod -s "$ZSH_PATH" "$(whoami)"
 
 rm -rf ~/Downloads
 

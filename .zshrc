@@ -27,6 +27,8 @@ fi
 alias ll='ls -alF --time-style="+%Y/%m/%d %H:%M:%S"'
 alias gitg='git log --graph --oneline --decorate=full --date=short --format="%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)" $args'
 alias sail='[ -f sail  ] && sh sail || sh vendor/bin/sail'
+# サーバー一覧は`speedtest -L`で表示できる。詳しくは`speedtest -h`で。
+# alias speedtest='speedtest -s 48463'
 alias pbcopy='xsel --clipboard --input'
 alias here='open .'
 alias py='python3'
