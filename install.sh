@@ -107,8 +107,9 @@ bash deploy-dotfiles
 
 echo "### Change shell to zsh"
 ZSH_PATH="$(command -v zsh)"
+TARGET_USER="$(logname 2>/dev/null || id -un)"
 grep -qxF "$ZSH_PATH" /etc/shells || echo "$ZSH_PATH" | $SUDO tee -a /etc/shells > /dev/null
-$SUDO usermod -s "$ZSH_PATH" "$(whoami)"
+$SUDO usermod -s "$ZSH_PATH" "$TARGET_USER"
 
 rm -rf ~/Downloads
 
