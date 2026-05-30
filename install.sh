@@ -98,6 +98,27 @@ echo "### speedtest CLI (Ookla)"
 curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | $SUDO bash
 $SUDO apt install -y --no-install-recommends speedtest
 
+echo "### Docker"
+DOCKER_INSTALLED=0
+if [ -f /.dockerenv ] || grep -qE 'docker|lxc|containerd' /proc/1/cgroup 2>/dev/null; then
+    echo "    コンテナ環境のためスキップ"
+else
+    $SUDO install -m 0755 -d /etc/apt/keyrings
+    $SUDO curl -fsSL https://download.docker.com/linux/debian/gpg \
+        -o /etc/apt/keyrings/docker.asc
+    $SUDO chmod a+r /etc/apt/keyrings/docker.asc
+    . /etc/os-release
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/debian ${VERSION_CODENAME} stable" \
+        | $SUDO tee /etc/apt/sources.list.d/docker.list > /dev/null
+    $SUDO apt update
+    $SUDO apt install -y --no-install-recommends \
+        docker-ce docker-ce-cli containerd.io \
+        docker-buildx-plugin docker-compose-plugin
+    $SUDO usermod -aG docker "$(logname 2>/dev/null || id -un)"
+    DOCKER_INSTALLED=1
+fi
+
 echo "### Claude Code"
 npm install -g @anthropic-ai/claude-code
 
@@ -116,3 +137,6 @@ rm -rf ~/Downloads
 echo ""
 echo "### Done."
 echo "Restart shell or run: exec zsh"
+if [ "$DOCKER_INSTALLED" -eq 1 ]; then
+    echo "NOTE: Docker group change requires re-login or run: newgrp docker"
+fi
