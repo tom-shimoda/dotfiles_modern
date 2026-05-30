@@ -1,3 +1,6 @@
+# global gitignore の CLAUDE.md ルールを上書き
+!claude-config/CLAUDE.md
+
 # macOS
 .DS_Store
 

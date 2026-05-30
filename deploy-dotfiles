@@ -19,6 +19,7 @@ rm -rf ~/.config/nvim
 cp -r "$SCRIPT_DIR/.config/nvim" ~/.config/nvim
 
 copy_to .gitconfig ~
+copy_to .gitignore_global ~
 copy_to .zshrc ~
 copy_to .tmux.conf ~
 copy_to .tmux_toggle.conf ~
@@ -31,4 +32,4 @@ copy_to .tmux/scripts/wan-ip.sh ~/.tmux/scripts/
 chmod +x ~/.tmux/scripts/lan-ip.sh ~/.tmux/scripts/wan-ip.sh
 
 mkdir -p ~/.claude
-copy_to .claude/CLAUDE.md ~/.claude/
+copy_to claude-config/CLAUDE.md ~/.claude/
