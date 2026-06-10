@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+copy_to() {
+    if [ -e "$1" ]; then
+        echo "copy $1"
+        cp $3 "$1" "$2"
+    else
+        echo "skip: $1 (not found)"
+    fi
+}
+
+echo "copy .config/nvim"
+rm -rf "$SCRIPT_DIR/.config/nvim"
+cp -r ~/.config/nvim "$SCRIPT_DIR/.config/nvim"
+
+copy_to ~/.gitconfig "$SCRIPT_DIR/"
+copy_to ~/.gitignore_global "$SCRIPT_DIR/"
+copy_to ~/.zshrc "$SCRIPT_DIR/"
+copy_to ~/.tmux.conf "$SCRIPT_DIR/"
+copy_to ~/.tmux_toggle.conf "$SCRIPT_DIR/"
+copy_to ~/.tmux-pane-border "$SCRIPT_DIR/"
+copy_to ~/.p10k.zsh "$SCRIPT_DIR/"
+
+mkdir -p "$SCRIPT_DIR/.tmux/scripts"
+copy_to ~/.tmux/scripts/lan-ip.sh "$SCRIPT_DIR/.tmux/scripts/"
+copy_to ~/.tmux/scripts/wan-ip.sh "$SCRIPT_DIR/.tmux/scripts/"
+
+mkdir -p "$SCRIPT_DIR/claude-config"
+copy_to ~/.claude/CLAUDE.md "$SCRIPT_DIR/claude-config/"
