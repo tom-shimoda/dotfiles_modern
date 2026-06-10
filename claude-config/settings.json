@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits"
+  },
+  "language": "日本語",
+  "theme": "dark-ansi",
+  "autoCompactEnabled": false,
+  "tui": "default"
+}

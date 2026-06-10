@@ -33,3 +33,4 @@ chmod +x ~/.tmux/scripts/lan-ip.sh ~/.tmux/scripts/wan-ip.sh
 
 mkdir -p ~/.claude
 copy_to claude-config/CLAUDE.md ~/.claude/
+copy_to claude-config/settings.json ~/.claude/

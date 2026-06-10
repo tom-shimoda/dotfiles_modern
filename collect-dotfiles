@@ -30,3 +30,4 @@ copy_to ~/.tmux/scripts/wan-ip.sh "$SCRIPT_DIR/.tmux/scripts/"
 
 mkdir -p "$SCRIPT_DIR/claude-config"
 copy_to ~/.claude/CLAUDE.md "$SCRIPT_DIR/claude-config/"
+copy_to ~/.claude/settings.json "$SCRIPT_DIR/claude-config/"
